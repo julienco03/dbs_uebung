@@ -1,0 +1,1 @@
+Datenbankentwurf am Beispiel einer Ferienwohnungvermietung
