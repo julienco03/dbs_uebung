@@ -1,1 +1,1 @@
-Datenbankentwurf am Beispiel einer Ferienwohnungvermietung
+Datenbankentwurf am Beispiel eines Online-Reservierungssystem für Ferienwohnungen
