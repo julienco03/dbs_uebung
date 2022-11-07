@@ -68,7 +68,7 @@ public class JMainFrame extends JFrame {
         JTextField abreiseTextField = new JTextField("", 10);
         abreiseTextField.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                String text = anreiseTextField.getText().toString();
+                String text = abreiseTextField.getText().toString();
                 // TODO: implement functionality
             }
         });
