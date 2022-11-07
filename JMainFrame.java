@@ -44,7 +44,6 @@ public class JMainFrame extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 String text = reisezielComboBox.getSelectedItem().toString();
                 // TODO: implement functionality
-                System.out.println(text); // debug
             }
         });
         reisezielpanel.add(reisezielLabel);
@@ -54,6 +53,12 @@ public class JMainFrame extends JFrame {
         JPanel anreisepanel = new JPanel();
         JLabel anreiseLabel = new JLabel("Anreise: ");
         JTextField anreiseTextField = new JTextField("", 10);
+        anreiseTextField.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                String text = anreiseTextField.getText().toString();
+                // TODO: implement functionality
+            }
+        });
         anreisepanel.add(anreiseLabel);
         anreisepanel.add(anreiseTextField);
 
@@ -61,6 +66,12 @@ public class JMainFrame extends JFrame {
         JPanel abreisepanel = new JPanel();
         JLabel abreiseLabel = new JLabel("Abreise: ");
         JTextField abreiseTextField = new JTextField("", 10);
+        abreiseTextField.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                String text = anreiseTextField.getText().toString();
+                // TODO: implement functionality
+            }
+        });
         abreisepanel.add(abreiseLabel);
         abreisepanel.add(abreiseTextField);
 
@@ -78,7 +89,7 @@ public class JMainFrame extends JFrame {
         ActionListener actionListener = new ActionListener() {
             public void actionPerformed(ActionEvent event) {
                 JCheckBox checkbox = (JCheckBox) event.getSource();
-                // TODO: implement functionality
+                // TODO: implement functionalities
                 if (checkbox == parkplatzCheckBox) {
 
                 } else if (checkbox == restaurantCheckBox) {
@@ -113,7 +124,7 @@ public class JMainFrame extends JFrame {
         JPanel searchregisterpanel = new JPanel();
         searchregisterpanel.setAlignmentX(BOTTOM_ALIGNMENT);
         JButton searchButton = new JButton(" Suchen ");
-        JButton registerButton = new JButton("Registrieren");
+        JButton registerButton = new JButton(" Registrieren ");
         searchButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // TODO: implement functionality
@@ -121,7 +132,7 @@ public class JMainFrame extends JFrame {
         });
         registerButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                new JRegisterFrame().setVisible(true);
+                new JRegisterFrame().run();
             }
         });
         searchregisterpanel.add(searchButton);
