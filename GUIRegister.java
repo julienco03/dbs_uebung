@@ -13,7 +13,7 @@ import java.awt.event.ActionEvent;
  * Datum: 21.10.2022
  */
 
-public class JRegisterFrame extends JFrame {
+public class GUIRegister extends JFrame {
 
     public void run() {
 

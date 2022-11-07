@@ -11,7 +11,7 @@ import java.awt.event.ActionEvent;
  * Autor: Julian Klimek, Dominik Bartsch
  * Datum: 21.10.2022
  */
-public class JMainFrame extends JFrame {
+public class GUIMain extends JFrame {
 
     public static void main(String[] args) {
 
@@ -132,7 +132,7 @@ public class JMainFrame extends JFrame {
         });
         registerButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                new JRegisterFrame().run();
+                new GUIRegister().run();
             }
         });
         searchregisterpanel.add(searchButton);
