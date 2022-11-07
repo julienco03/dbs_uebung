@@ -128,12 +128,12 @@ public class JMainFrame extends JFrame {
         searchregisterpanel.add(registerButton);
 
         // ADD ALL PANELS TO MAIN PANEL
-        panel.add(titlepanel); // titel
-        panel.add(reisezielpanel); // reiseziel bzw. land eingeben
-        panel.add(anreisepanel); // anreise
-        panel.add(abreisepanel); // abreise
-        panel.add(ausstattungpanel); // optional: ausstattungen angeben
-        panel.add(searchregisterpanel); // search button and reigister button
+        panel.add(titlepanel);
+        panel.add(reisezielpanel);
+        panel.add(anreisepanel);
+        panel.add(abreisepanel);
+        panel.add(ausstattungpanel);
+        panel.add(searchregisterpanel);
 
         // SET UP AND DISPLAY WINDOW
         frame.setContentPane(panel);
