@@ -22,7 +22,7 @@ public class GUIRegister extends JFrame {
 
         // SET UP CONTENT PANE
         JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(9, 1));
+        panel.setLayout(new GridLayout(11, 1));
         panel.setAlignmentX(LEFT_ALIGNMENT);
 
         // ADD TITLE PANEL
@@ -64,19 +64,19 @@ public class GUIRegister extends JFrame {
         nachnamepanel.add(nachnameTextField);
         namepanel.add(vornamepanel);
         namepanel.add(nachnamepanel);
-
-        // ADD MAIL PANEL
-        JPanel mailpanel = new JPanel();
-        JLabel mailLabel = new JLabel("E-Mail-Adresse:");
-        JTextField mailTextField = new JTextField("", 65);
-        mailTextField.addActionListener(new ActionListener() {
+        
+        // ADD TELNR PANEL
+        JPanel telnrpanel = new JPanel();
+        JLabel telnrLabel = new JLabel("Telefon-Nr.:");
+        JTextField telnrTextField = new JTextField("", 65);
+        telnrTextField.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                String text = mailTextField.getText().toString();
+                String text = telnrTextField.getText().toString();
                 // TODO: implement functionality
             }
         });
-        mailpanel.add(mailLabel);
-        mailpanel.add(mailTextField);
+        telnrpanel.add(telnrLabel);
+        telnrpanel.add(telnrTextField);
 
         // ADD LAND PANEL
         JPanel landpanel = new JPanel();
@@ -158,6 +158,32 @@ public class GUIRegister extends JFrame {
         });
         ibanpanel.add(ibanLabel);
         ibanpanel.add(ibanTextField);
+        
+        // ADD MAIL PANEL
+        JPanel mailpanel = new JPanel();
+        JLabel mailLabel = new JLabel("E-Mail-Adresse:");
+        JTextField mailTextField = new JTextField("", 65);
+        mailTextField.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                String text = mailTextField.getText().toString();
+                // TODO: implement functionality
+            }
+        });
+        mailpanel.add(mailLabel);
+        mailpanel.add(mailTextField);
+        
+        // ADD PASSWORD PANEL
+        JPanel passwordpanel = new JPanel();
+        JLabel passwordLabel = new JLabel("Passwort:");
+        JTextField passwordTextField = new JTextField("", 65);
+        passwordTextField.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                String text = passwordTextField.getText().toString();
+                // TODO: implement functionality
+            }
+        });
+        passwordpanel.add(passwordLabel);
+        passwordpanel.add(passwordTextField);
 
         // ADD NEWSLETTER PANEL
         JPanel newsletterpanel = new JPanel();
@@ -191,11 +217,13 @@ public class GUIRegister extends JFrame {
         // ADD ALL PANELS TO MAIN PANEL
         panel.add(titlepanel);
         panel.add(namepanel);
-        panel.add(mailpanel);
+        panel.add(telnrpanel);
         panel.add(landpanel);
         panel.add(plzortpanel);
         panel.add(streetnumberpanel);
         panel.add(ibanpanel);
+        panel.add(mailpanel);
+        panel.add(passwordpanel);
         panel.add(newsletterpanel);
         panel.add(backconfirmpanel);
 
