@@ -1,6 +1,12 @@
 create sequence adressID increment by 1 start with 200000;
 
 insert into dbsys41.Adresse values(
+    adressID.nextval, 'Überlingen', '88662', 'Parkstraße', '5', 'Deutschland'
+);
+insert into dbsys41.Adresse values(
+    adressID.nextval, 'Konstanz', '78462', 'Feldweg', '3', 'Deutschland'
+);
+insert into dbsys41.Adresse values(
     adressID.nextval, 'München', '80331', 'Schlossallee', '2A', 'Deutschland'
 );
 insert into dbsys41.Adresse values(
@@ -17,6 +23,9 @@ insert into dbsys41.Adresse values(
 );
 insert into dbsys41.Adresse values(
     adressID.nextval, 'Barcelona', '08001', 'C. de Sevilla', '9', 'Spanien'
+);
+insert into dbsys41.Adresse values(
+    adressID.nextval, 'Barcelona', '08001', 'C. de Valencia', '17', 'Spanien'
 );
 
 COMMIT;

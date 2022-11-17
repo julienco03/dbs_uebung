@@ -22,3 +22,15 @@
     frei? Geben Sie den Ferienwohnungs-Namen und deren durchschnittliche Bewertung an.
     Ferienwohnungen mit guten Bewertungen sollen zuerst angezeigt werden. Ferienwohnungen ohne
     Bewertungen sollen am Ende ausgegeben werden. */
+    
+    
+/** Test Abfragen vom Kundenaccount*/
+select * from dbsys41.Land;
+select * from dbsys41.Adresse;
+select * from dbsys41.Kunde;
+select * from dbsys41.Ferienwohnung;
+select * from dbsys41.Ausstattung;
+select * from dbsys41.Attraktion;
+
+
+

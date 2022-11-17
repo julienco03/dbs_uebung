@@ -6,3 +6,5 @@ insert into  dbsys41.Land values ('Schweiz');
 insert into  dbsys41.Land values ('Frankreich');
 insert into  dbsys41.Land values ('Belgien');
 insert into  dbsys41.Land values ('Niederlande');
+
+COMMIT;
