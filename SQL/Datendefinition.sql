@@ -29,7 +29,8 @@ create table Adresse (
         check (regexp_like (plz, '^\d{5}$'))
 );
 create table Land (
-    landname    varchar2(20) not null unique
+    landname    varchar2(20) not null,
+    constraint Land_pk primary key (landname)
 );
 create table Ferienwohnung (
     fwname      varchar2(20) not null,
@@ -105,16 +106,20 @@ create table AusgestattetMit (
     fwname              varchar2(20) not null,
     ausstattungsname    varchar2(20) not null,
     constraint AusgestattetMit_pk primary key (fwname, ausstattungsname),
-    constraint AusgestattetMit_fk1 foreign key (fwname) references Ferienwohnung(fwname),
-    constraint AusgestattetMit_fk2 foreign key (ausstattungsname) references Ausstattung(ausstattungsname)
+    constraint AusgestattetMit_fk1 foreign key (fwname)
+        references Ferienwohnung(fwname) on delete cascade,
+    constraint AusgestattetMit_fk2 foreign key (ausstattungsname)
+        references Ausstattung(ausstattungsname) on delete cascade
 );
 create table NaheVon (
     attraktionsname     varchar2(20) not null,
     fwname              varchar2(20) not null,
     entfernung          float        not null,
     constraint NaheVon_pk primary key (attraktionsname, fwname),
-    constraint NaheVon_fk1 foreign key (attraktionsname) references Attraktion(attraktionsname),
-    constraint NaheVon_fk2 foreign key (fwname) references Ferienwohnung(fwname),
+    constraint NaheVon_fk1 foreign key (attraktionsname)
+        references Attraktion(attraktionsname) on delete cascade,
+    constraint NaheVon_fk2 foreign key (fwname)
+        references Ferienwohnung(fwname) on delete cascade,
     constraint entfernung_check check (entfernung > 0)
 );
 
