@@ -1,23 +1,24 @@
 create table Kunde (
-    kundenID    varchar2(20) not null,
+    kundenID    varchar2(6) not null,
     mail        varchar2(50) not null unique,
     passwort    varchar2(20) not null,
     vorname     varchar2(20) not null,
     nachname    varchar2(20) not null,
     iban        varchar2(22) not null unique,
     newsletter  char(1) check (newsletter in ( 'Y', 'N' )) not null,
-    adressID    varchar2(22) not null unique,
+    adressID    varchar2(6) not null unique,
     constraint Kunde_pk primary key (kundenID),
     constraint Kunde_fk foreign key (adressID) references Adresse(adressID),
     constraint mail_format 
-        check (regexp_like (mail, '^([\w\.]+)@([\w\.]+)\.(\w+)$')),
+        check (regexp_like (mail, '^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$')),
     constraint iban_format
         check (regexp_like (iban, '^\w{2}\d{2} ?\d{4} ?\d{4} ?\d{4} ?\d{4} ?\d{2}$')),
     constraint passwort_format
-        check (regexp_like (passwort, '^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$'))
+        check (regexp_like (passwort, '^.{8,20}$'))
+        /**check (regexp_like (passwort, '^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$'))*/
 );
 create table Adresse (
-    adressID    varchar2(20) not null,
+    adressID    varchar2(6) not null,
     stadt       varchar2(20) not null,
     plz         varchar2(5)  not null,
     strasse     varchar2(20) not null,
@@ -26,18 +27,18 @@ create table Adresse (
     constraint  Adresse_pk primary key (adressID),
     constraint  Adresse_fk foreign key (landname) references Land(landname),
     constraint plz_format
-        check (regexp_like (plz, '^\d{5}$'))
+        check (regexp_like (plz, '^\d{5}$')) 
 );
 create table Land (
     landname    varchar2(20) not null,
     constraint Land_pk primary key (landname)
 );
 create table Ferienwohnung (
-    fwname      varchar2(20) not null,
+    fwname      varchar2(40) not null,
     zimmer      integer      not null,
     groesse     float        not null,
     preis       float        not null,
-    adressID    varchar2(20) not null unique,
+    adressID    varchar2(6) not null unique,
     constraint Ferienwohnung_pk primary key (fwname),
     constraint Ferienwohnung_fk foreign key (adressID) references Adresse(adressID),
     constraint zimmer_check check (zimmer > 0),
@@ -46,7 +47,7 @@ create table Ferienwohnung (
 );
 create table Bild (
     bildname    varchar2(20) not null ,
-    fwname      varchar2(20) not null unique,
+    fwname      varchar2(40) not null unique,
     constraint Bild_pk primary key (bildname),
     constraint Bild_fk foreign key (fwname) references Ferienwohnung(fwname),
     constraint bildname_format
@@ -62,14 +63,14 @@ create table Attraktion (
     constraint Attraktion_pk primary key (attraktionsname)
 );
 create table Buchung (
-    buchungsnr      varchar2(20) not null,
+    buchungsnr      varchar2(6) not null,
     buchungsdatum   date         not null,
     startdatum      date         not null,
     enddatum        date         not null,
-    kundenID        varchar2(20) not null unique,
-    fwname          varchar2(20) not null unique,
-    rechnungsnr     varchar2(20) not null unique,
-    bewertungsnr    varchar2(20) not null unique,
+    kundenID        varchar2(6) not null unique,
+    fwname          varchar2(40) not null unique,
+    rechnungsnr     varchar2(6) not null unique,
+    bewertungsnr    varchar2(6) not null unique,
     constraint Buchung_pk primary key (buchungsnr),
     constraint Buchung_fk1 foreign key (kundenID) references Kunde(kundenID),
     constraint Buchung_fk2 foreign key (fwname) references Ferienwohnung(fwname),
@@ -79,23 +80,23 @@ create table Buchung (
     constraint enddatum_check check (startdatum < enddatum)
 );
 create table Rechnung (
-    rechnungsnr     varchar2(20) not null,
+    rechnungsnr     varchar2(6) not null,
     rechnungsdatum  date         not null,
     betragrechnung  float        not null,
     constraint Rechnnung primary key (rechnungsnr),
     constraint betragrechnung_check check (betragrechnung > 0)
 );
 create table Anzahlung (
-    anzahlungsnr    varchar2(20) not null,
+    anzahlungsnr    varchar2(6) not null,
     zahlungsddatum  date         not null,
     betraganzahlung float        not null,
-    rechnungsnr     varchar2(20) not null unique,
+    rechnungsnr     varchar2(6) not null unique,
     constraint Anzahlung_pk primary key (anzahlungsnr),
     constraint Anzahlung_fk foreign key (rechnungsnr) references Rechnung(rechnungsnr),
     constraint betraganzahlung_check check (betraganzahlung > 0)
 );
 create table Bewertung (
-    bewertungsnr    varchar2(20) not null,
+    bewertungsnr    varchar2(6) not null,
     kommentar       varchar2(250),
     sterne          integer      not null,
     bewertungsdatum date         not null,
@@ -103,7 +104,7 @@ create table Bewertung (
     constraint sterne_check check (sterne between 1 and 5)
 );
 create table AusgestattetMit (
-    fwname              varchar2(20) not null,
+    fwname              varchar2(40) not null,
     ausstattungsname    varchar2(20) not null,
     constraint AusgestattetMit_pk primary key (fwname, ausstattungsname),
     constraint AusgestattetMit_fk1 foreign key (fwname)
@@ -113,7 +114,7 @@ create table AusgestattetMit (
 );
 create table NaheVon (
     attraktionsname     varchar2(20) not null,
-    fwname              varchar2(20) not null,
+    fwname              varchar2(40) not null,
     entfernung          float        not null,
     constraint NaheVon_pk primary key (attraktionsname, fwname),
     constraint NaheVon_fk1 foreign key (attraktionsname)
@@ -125,9 +126,23 @@ create table NaheVon (
 
 COMMIT;
 
-
-
-
+/**
+select 'drop table '||table_name||' cascade constraints;' from user_tables;
+drop table ADRESSE cascade constraints;
+drop table ANZAHLUNG cascade constraints;
+drop table ATTRAKTION cascade constraints;
+drop table AUSGESTATTETMIT cascade constraints;
+drop table AUSSTATTUNG cascade constraints;
+drop table BEWERTUNG cascade constraints;
+drop table BILD cascade constraints;
+drop table BUCHUNG cascade constraints;
+drop table FERIENWOHNUNG cascade constraints;
+drop table KUNDE cascade constraints;
+drop table LAND cascade constraints;
+drop table NAHEVON cascade constraints;
+drop table RECHNUNG cascade constraints;
+COMMIT;
+*/
 
 
 
