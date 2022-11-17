@@ -1,38 +1,40 @@
-grant select, insert, update
-on dbsys41.Adresse to dbsys32;
+GRANT SELECT, INSERT, UPDATE
+ON dbsys41.Adresse TO dbsys32;
 
-grant select, update 
-on dbsys41.Anzahlung to dbsys32;
+GRANT SELECT, UPDATE
+ON dbsys41.Anzahlung TO dbsys32;
 
-grant select 
-on dbsys41.Attraktion to dbsys32;
+GRANT SELECT 
+ON dbsys41.Attraktion TO dbsys32;
 
-grant select 
-on dbsys41.AusgestattetMit to dbsys32;
+GRANT SELECT 
+ON dbsys41.AusgestattetMit TO dbsys32;
 
-grant select 
-on dbsys41.Ausstattung to dbsys32;
+GRANT SELECT 
+ON dbsys41.Ausstattung TO dbsys32;
 
-grant select, insert, update, delete
-on dbsys41.Bewertung to dbsys32;
+GRANT SELECT, INSERT, UPDATE, DELETE
+ON dbsys41.Bewertung TO dbsys32;
 
-grant select 
-on dbsys41.Kunde to dbsys32;
+GRANT SELECT 
+on dbsys41.Bild TO dbsys32;
 
-grant select 
-on dbsys41.Kunde to dbsys32;
+GRANT SELECT, INSERT, UPDATE
+ON dbsys41.Buchung TO dbsys32;
 
-grant select 
-on dbsys41.Kunde to dbsys32;
+GRANT SELECT 
+ON dbsys41.Ferienwohnung TO dbsys32;
 
-grant select 
-on dbsys41.Kunde to dbsys32;
+GRANT SELECT, UPDATE, DELETE
+ON dbsys41.Kunde TO dbsys32;
 
-grant select 
-on dbsys41.Kunde to dbsys32;
+GRANT SELECT 
+ON dbsys41.Land TO dbsys32;
 
-grant select 
-on dbsys41.Kunde to dbsys32;
+GRANT SELECT 
+ON dbsys41.NaheVon TO dbsys32;
 
-grant select 
-on dbsys41.Kunde to dbsys32;
+GRANT SELECT 
+ON dbsys41.Rechnung TO dbsys32;
+
+COMMIT;
