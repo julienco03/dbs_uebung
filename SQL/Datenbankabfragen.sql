@@ -31,6 +31,10 @@ select * from dbsys41.Kunde;
 select * from dbsys41.Ferienwohnung;
 select * from dbsys41.Ausstattung;
 select * from dbsys41.Attraktion;
-
+select * from dbsys41.Bewertung;
+select * from dbsys41.Rechnung;
+select * from dbsys41.Buchung;
+select * from dbsys41.NaheVon;
+select * from dbsys41.AusgestattetMit;
 
 
