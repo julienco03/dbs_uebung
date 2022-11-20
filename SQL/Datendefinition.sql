@@ -67,8 +67,8 @@ create table Buchung (
     buchungsdatum   date         not null,
     startdatum      date         not null,
     enddatum        date         not null,
-    kundenID        varchar2(6) not null unique,
-    fwname          varchar2(40) not null unique,
+    kundenID        varchar2(6) not null,
+    fwname          varchar2(40) not null,
     rechnungsnr     varchar2(6) not null unique,
     bewertungsnr    varchar2(6) not null unique,
     constraint Buchung_pk primary key (buchungsnr),
@@ -78,6 +78,7 @@ create table Buchung (
     constraint Buchung_fk4 foreign key (bewertungsnr) references Bewertung(bewertungsnr),
     constraint startdatum_check check (startdatum < enddatum),
     constraint enddatum_check check (startdatum < enddatum)
+    /** Evtl. constraint bewertungsdatum check (bewertungsdatum > enddatum)*/
 );
 create table Rechnung (
     rechnungsnr     varchar2(6) not null,
