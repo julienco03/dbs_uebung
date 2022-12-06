@@ -5,9 +5,10 @@ where fwname not in (select fwname from dbsys41.Buchung);
 
 
 /** Welche Kunden haben eine Ferienwohnung bereits mehrmals gebucht? */
-select distinct b1.kundenID
-from dbsys41.Buchung b1
-where exists (
+select distinct b1.kundenID, k.name
+from dbsys41.Buchung b1, dbsys41.Kunde k
+where b1.kundenID = k.kundenID
+and exists (
     select kundenID
     from dbsys41.Buchung b2
     where b1.kundenID = b2.kundenID
@@ -15,10 +16,10 @@ where exists (
     and b1.fwname = b2.fwname
 );
 
--- ALTERNATIVE --
-select kundenID, count(*) as Buchungen
+-- ALTERNATIVE - nicht so schön --
+select distinct kundenID, count(*) as Buchungen
 from dbsys41.Buchung
-group by kundenID
+group by kundenID, fwname
 having count(*) >= 2;
 
 
@@ -41,10 +42,9 @@ where b.bewertungsnr = bw.bewertungsnr;
 /** Welche Ferienwohnung hat die meisten Ausstattungen? Falls mehrere Ferienwohnungen das
     Maximum an Ausstattungen erreichen, sollen diese alle ausgegeben werden. */
 with MEISTE_AUSSTATTUNGEN as 
-    (select f.fwname, count(a.ausstattungsname) as anzahl
-    from dbsys41.Ferienwohnung f, dbsys41.AusgestattetMit a
-    where f.fwname = a.fwname
-    group by f.fwname)
+    (select a.fwname, count(a.ausstattungsname) as anzahl
+    from dbsys41.AusgestattetMit a
+    group by a.fwname)
 select fwname
 from MEISTE_AUSSTATTUNGEN m
 where m.anzahl = (
@@ -64,8 +64,8 @@ group by f.fwname;
     Reservierungen absteigend sortiert werden. */
 select a.landname, nvl(count(b.buchungsnr), 0) as Anzahl_Reservierungen
 from dbsys41.Adresse a
-left join Ferienwohnung f on a.adressID = f.adressID
-left join Buchung b on f.fwname = b.fwname
+left join dbsys41.Ferienwohnung f on a.adressID = f.adressID
+left join dbsys41.Buchung b on f.fwname = b.fwname
 group by a.landname
 order by nvl(count(b.buchungsnr), 0) desc;
 
@@ -95,21 +95,30 @@ and (
     Ferienwohnungen mit guten Bewertungen sollen zuerst angezeigt werden. Ferienwohnungen ohne
     Bewertungen sollen am Ende ausgegeben werden. */
 select b.fwname, avg(bw.sterne) as Durchschnitt_Sterne
-from dbsys41.Buchung b, dbsys41.Ferienwohnung f, dbsys41.AusgestattetMit am, dbsys41.Adresse a, dbsys41.Bewertung bw
-where b.fwname = am.fwname
-and b.fwname = f.fwname
-and f.adressID = a.adressID
-and b.bewertungsnr = bw.bewertungsnr
-and a.landname = 'Spanien'
+from dbsys41.Ferienwohnung f
+inner join dbsys41.AusgestattetMit am on f.fwname = am.fwname
+inner join dbsys41.Adresse ad on ad.adressID = f.adressID
+left join dbsys41.Buchung b on b.fwname = f.fwname
+left join dbsys41.Bewertung bw on bw.bewertungsnr = b.bewertungsnr
+where ad.landname = 'Spanien'
 and am.ausstattungsname = 'Sauna'
 and not exists (
     select b2.buchungsnr
     from dbsys41.Buchung b2
-    where b2.startdatum <= to_date('01.11.22', 'DD.MM.YY')
-    and b2.enddatum >= to_date('21.11.22', 'DD.MM.YY')
+    where b2.fwname = f.fwname
+    and (
+        (b2.startdatum >= to_date('01.11.22', 'DD.MM.YY')
+        and b2.startdatum <= to_date('21.11.22', 'DD.MM.YY'))
+        or 
+        (b2.enddatum >= to_date('01.11.22', 'DD.MM.YY')
+        and b2.enddatum <= to_date('21.11.22', 'DD.MM.YY'))
+        or 
+        (b2.startdatum <= to_date('01.11.22', 'DD.MM.YY')
+        and b2.enddatum >= to_date('21.11.22', 'DD.MM.YY'))
+    )
 )
 group by b.fwname
-order by avg(bw.sterne) desc;
+order by avg(bw.sterne) desc nulls last;
 
 -- DEBUG --
 select * from dbsys41.AusgestattetMit where ausstattungsname = 'Sauna';
