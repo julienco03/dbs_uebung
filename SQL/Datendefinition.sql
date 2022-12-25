@@ -1,5 +1,5 @@
 create table Kunde (
-    kundenID    varchar2(6) not null,
+    kundenID    varchar2(6)  not null,
     mail        varchar2(50) not null unique,
     passwort    varchar2(20) not null,
     vorname     varchar2(20) not null,
@@ -18,7 +18,7 @@ create table Kunde (
         /**check (regexp_like (passwort, '^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$'))*/
 );
 create table Adresse (
-    adressID    varchar2(6) not null,
+    adressID    varchar2(6)  not null,
     stadt       varchar2(20) not null,
     plz         varchar2(5)  not null,
     strasse     varchar2(20) not null,
@@ -63,14 +63,14 @@ create table Attraktion (
     constraint Attraktion_pk primary key (attraktionsname)
 );
 create table Buchung (
-    buchungsnr      varchar2(6) not null,
+    buchungsnr      varchar2(6)  not null,
     buchungsdatum   date         not null,
     startdatum      date         not null,
     enddatum        date         not null,
-    kundenID        varchar2(6) not null,
+    kundenID        varchar2(6)  not null,
     fwname          varchar2(40) not null,
-    rechnungsnr     varchar2(6) not null unique,
-    bewertungsnr    varchar2(6) not null unique,
+    rechnungsnr     varchar2(6)  not null unique,
+    bewertungsnr    varchar2(6)  not null unique,
     constraint Buchung_pk primary key (buchungsnr),
     constraint Buchung_fk1 foreign key (kundenID) references Kunde(kundenID),
     constraint Buchung_fk2 foreign key (fwname) references Ferienwohnung(fwname),
@@ -78,7 +78,6 @@ create table Buchung (
     constraint Buchung_fk4 foreign key (bewertungsnr) references Bewertung(bewertungsnr),
     constraint startdatum_check check (startdatum < enddatum),
     constraint enddatum_check check (startdatum < enddatum)
-    /** Evtl. constraint bewertungsdatum check (bewertungsdatum > enddatum)*/
 );
 create table Rechnung (
     rechnungsnr     varchar2(6) not null,
@@ -124,10 +123,24 @@ create table NaheVon (
         references Ferienwohnung(fwname) on delete cascade,
     constraint entfernung_check check (entfernung > 0)
 );
+create table StornierteBuchung (
+    stornonr        varchar2(6)  not null,
+    stornodatum     date         not null,
+    buchungsnr      varchar2(6)  not null,
+    buchungsdatum   date         not null,
+    startdatum      date         not null,
+    enddatum        date         not null,
+    kundenID        varchar2(6)  not null,
+    fwname          varchar2(40) not null,
+    rechnungsnr     varchar2(6)  not null unique,
+    bewertungsnr    varchar2(6)  not null unique,
+    constraint StornierteBuchung_pk primary key (stornonr)
+);
 
 COMMIT;
 
 /**
+=== ZUM LÖSCHEN ALLER TABELLEN INKL. CONSTRAINTS ===
 select 'drop table '||table_name||' cascade constraints;' from user_tables;
 drop table ADRESSE cascade constraints;
 drop table ANZAHLUNG cascade constraints;
@@ -142,6 +155,7 @@ drop table KUNDE cascade constraints;
 drop table LAND cascade constraints;
 drop table NAHEVON cascade constraints;
 drop table RECHNUNG cascade constraints;
+drop table STORNIERTEBUCHUNG cascade constraints;
 COMMIT;
 */
 
