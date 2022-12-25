@@ -22,7 +22,9 @@ CREATE OR REPLACE TRIGGER BuchungStorniert
 COMMIT;
 
 /* === TEST === */
-delete from dbsys41.Buchung where kundenID = '100260';
+-- delete funktioniert für bestimmte werte nicht mehr, da ich die tabelle storniertebuchung
+-- nach einem delete neu erzeugt habe und nun etwas durcheinandergekommen ist
+-- die buchung mit der nr 300042 sollte demnach nicht existieren, lässt sich aber nicht löschen
+delete from dbsys41.Buchung where fwname = 'Sensation Sagrada Familia';
 select * from dbsys41.Buchung;
 select * from dbsys41.StornierteBuchung;
-    
