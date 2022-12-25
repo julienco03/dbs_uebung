@@ -134,7 +134,12 @@ create table StornierteBuchung (
     fwname          varchar2(40) not null,
     rechnungsnr     varchar2(6)  not null unique,
     bewertungsnr    varchar2(6)  not null unique,
-    constraint StornierteBuchung_pk primary key (stornonr)
+    constraint StornierteBuchung_pk primary key (stornonr),
+    constraint Buchungsnr_fk foreign key (buchungsnr) references Buchung(buchungsnr),
+    constraint KundenID_fk foreign key (kundenID) references Kunde(kundenID),
+    constraint Fwname_fk foreign key (fwname) references Ferienwohnung(fwname),
+    constraint Rechnungsnr_fk foreign key (rechnungsnr) references Rechnung(rechnungsnr),
+    constraint Bewertungsnr_fk foreign key (bewertungsnr) references Bewertung(bewertungsnr)
 );
 
 COMMIT;
